@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task List</title>
+    <style>
+        /* CSS styles go here */
+        /* ... (previous CSS styles) ... */
+        .high-priority {
+            color: red;
+            font-weight: bold;
+        }
+
+        .medium-priority {
+            color: orange;
+        }
+
+        .low-priority {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task List</h1>
+        <input type="text" id="task-input" placeholder="Enter a new task">
+        <button id="add-button">Add Task</button>
+        <select id="priority-select">
+            <option value="high">High Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="low">Low Priority</option>
+        </select>
+        <ul id="task-list">
+            <!-- Task items will be dynamically added here -->
+        </ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById("task-input");
+        const addButton = document.getElementById("add-button");
+        const taskList = document.getElementById("task-list");
+        const prioritySelect = document.getElementById("priority-select");
+
+        addButton.addEventListener("click", function() {
+            const taskText = taskInput.value;
+            const taskPriority = prioritySelect.value;
+            if (taskText) {
+                const listItem = document.createElement("li");
+                listItem.className = "task-item " + taskPriority + "-priority";
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+
+                const label = document.createElement("label");
+                label.innerText = taskText;
+
+                const deleteButton = document.createElement("button");
+                deleteButton.className = "delete-button";
+                deleteButton.innerText = "Complete";
+
+                listItem.appendChild(checkbox);
+                listItem.appendChild(label);
+                listItem.appendChild(deleteButton);
+
+                taskList.appendChild(listItem);
+                taskInput.value = "";
+            }
+        });
+
+        taskList.addEventListener("change", function(event) {
+            if (event.target && event.target.type === "checkbox") {
+                event.target.parentElement.classList.toggle("completed");
+            }
+        });
+
+        taskList.addEventListener("click", function(event) {
+            if (event.target && event.target.className == "delete-button") {
+                event.target.parentElement.remove();
+            }
+        });
+    </script>
+</body>
+</html>
